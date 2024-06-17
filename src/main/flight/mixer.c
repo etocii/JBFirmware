@@ -67,6 +67,7 @@ PG_RESET_TEMPLATE(mixerConfig_t, mixerConfig,
     .swash_trim = { 0, 0, 0 },
     .swash_tta_precomp = 0,
     .swash_geo_correction = 0,
+    .jb_curve_factor = 0,
 );
 
 PG_REGISTER_ARRAY(mixerRule_t, MIXER_RULE_COUNT, mixerRules, PG_GENERIC_MIXER_RULES, 0);
@@ -213,6 +214,8 @@ static inline void mixerApplyInputLimit(int index, float value)
     // Input limits
     const float in_min = in->min / 1000.0f;
     const float in_max = in->max / 1000.0f;
+    
+    // Q: Do I scale the yaw PID output here??
 
     // Constrain and saturate
     if (value > in_max) {

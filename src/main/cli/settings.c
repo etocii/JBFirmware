@@ -1091,6 +1091,11 @@ const clivalue_t valueTable[] = {
     { "cyclic_cross_coupling_ratio",  VAR_UINT8 | PROFILE_VALUE, .config.minmaxUnsigned = { 0, 200 }, PG_PID_PROFILE, offsetof(pidProfile_t, cyclic_cross_coupling_ratio) },
     { "cyclic_cross_coupling_cutoff", VAR_UINT8 | PROFILE_VALUE, .config.minmaxUnsigned = { 1, 250 }, PG_PID_PROFILE, offsetof(pidProfile_t, cyclic_cross_coupling_cutoff) },
 
+    // CLI access to the curve factor.
+    // The VAR_ type must match the definition
+    // Profile parameters also need PROFILE_VALUE
+    { "jb_curve_factor",          VAR_UINT16 | PROFILE_VALUE, .config.minmaxUnsigned = { 1, 500 }, PG_PID_PROFILE, offsetof(pidProfile_t, jb_curve_factor) },
+
     { "error_rotation",             VAR_UINT8  | PROFILE_VALUE | MODE_LOOKUP, .config.lookup = { TABLE_OFF_ON }, PG_PID_PROFILE, offsetof(pidProfile_t, error_rotation) },
 
     { "error_limit",                VAR_UINT8  | PROFILE_VALUE | MODE_ARRAY, .config.array.length = 3, PG_PID_PROFILE, offsetof(pidProfile_t, error_limit) },
