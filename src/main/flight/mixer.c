@@ -49,6 +49,7 @@
 #include "pg/pg_ids.h"
 
 #include "sensors/gyro.h"
+#include "mixer.h"
 
 
 /** Configuration definitions **/
@@ -214,8 +215,6 @@ static inline void mixerApplyInputLimit(int index, float value)
     // Input limits
     const float in_min = in->min / 1000.0f;
     const float in_max = in->max / 1000.0f;
-    
-    // Q: Do I scale the yaw PID output here??
 
     // Constrain and saturate
     if (value > in_max) {
@@ -363,6 +362,19 @@ static void mixerUpdateMotorizedTail(void)
 
         // Yaw is now tail motor throttle
         mixer.input[MIXER_IN_STABILIZED_YAW] = throttle;
+    }
+    else if (mixerIsTailMode(TAIL_MODE_VARIABLE)) {
+        // Yaw input value
+        float yaw = mixer.input[MIXER_IN_STABILIZED_YAW];
+        
+        // Do some math here
+        const float jb_curve = mixerConfig()->jb_curve_factor / 1000.0f; //get curve factor from 0 to 0.5
+        const float cw_limit = mixerInputs(MIXER_IN_STABILIZED_YAW)->min; //find the CW limit
+
+        yaw = (1.0f - jb_curve * abs(yaw / cw_limit)) * yaw / (1.0f - jb_curve);
+
+        // Corrected yaw
+        mixer.input[MIXER_IN_STABILIZED_YAW] = yaw;
     }
     // Bidirectional tail motor
     else if (mixerIsTailMode(TAIL_MODE_BIDIRECTIONAL)) {

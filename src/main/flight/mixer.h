@@ -138,7 +138,7 @@ typedef struct
 
     int8_t    swash_geo_correction; // Head geometry correction (collective assymetry)
 
-    uint16_t  jb_curve_factor;
+    uint16_t  jb_curve_factor; // Jiawen Bao curve factor
 
 } mixerConfig_t;
 
