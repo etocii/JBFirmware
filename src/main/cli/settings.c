@@ -907,7 +907,7 @@ const clivalue_t valueTable[] = {
 // CLI access to the curve factor.
     // The VAR_ type must match the definition
     // Profile parameters also need PROFILE_VALUE
-    { "jb_curve_factor",          VAR_UINT16 | MASTER_VALUE, .config.minmaxUnsigned = { 1, 500 }, PG_GENERIC_MIXER_CONFIG, offsetof(mixerConfig_t, jb_curve_factor) },
+    { "jb_curve_factor",          VAR_UINT16 | MASTER_VALUE, .config.minmaxUnsigned = { 0, 500 }, PG_GENERIC_MIXER_CONFIG, offsetof(mixerConfig_t, jb_curve_factor) },
 
 // PG_GOVERNOR_CONFIG
     { "gov_mode",                   VAR_UINT8  |  MASTER_VALUE | MODE_LOOKUP, .config.lookup = { TABLE_GOVERNOR_MODE }, PG_GOVERNOR_CONFIG, offsetof(governorConfig_t, gov_mode) },
