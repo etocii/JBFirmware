@@ -371,7 +371,7 @@ static void mixerUpdateMotorizedTail(void)
         const float jb_curve = mixerConfig()->jb_curve_factor / 1000.0f; //get curve factor from 0 to 0.5
         const float cw_limit = mixerInputs(MIXER_IN_STABILIZED_YAW)->min; //find the CW limit
 
-        yaw = (1.0f - jb_curve * abs(yaw / cw_limit)) * yaw / (1.0f - jb_curve);
+        yaw = (1.0f - jb_curve * fabsf(yaw / cw_limit)) * yaw / (1.0f - jb_curve);
 
         // Corrected yaw
         mixer.input[MIXER_IN_STABILIZED_YAW] = yaw;
